@@ -15,9 +15,18 @@ fun FeedScreen(navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.SpaceEvenly
     ) {
         Text(text = "Feed Screen")
 
+        Button(onClick = { navController.navigate(Destination.Profile.route) {
+            popUpTo(Destination.Home.route)
+        } }) {
+            Text(text = "to Profile Screen")
+        }
+
+        Button(onClick = { navController.popBackStack() }) {
+            Text(text = "Back")
+        }
     }
 }

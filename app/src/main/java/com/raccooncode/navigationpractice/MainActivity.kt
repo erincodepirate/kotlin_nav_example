@@ -16,6 +16,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.composable
 import com.raccooncode.navigationpractice.ui.theme.NavigationPracticeTheme
 
+sealed class Destination(val route: String) {
+    object Home: Destination("home")
+    object Feed: Destination("feed")
+    object Profile: Destination("profile")
+}
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +43,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NavigationAppHost(navController: NavHostController) {
     NavHost(navController = navController, "home") {
-        composable("home") {HomeScreen(navController)}
-        composable("feed") {FeedScreen(navController)}
-        composable("profile") {ProfileScreen(navController)}
+        composable(Destination.Home.route) {HomeScreen(navController)}
+        composable(Destination.Feed.route) {FeedScreen(navController)}
+        composable(Destination.Profile.route) {ProfileScreen(navController)}
     }
 }

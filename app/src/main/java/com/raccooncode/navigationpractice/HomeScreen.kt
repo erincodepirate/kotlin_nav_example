@@ -19,11 +19,11 @@ fun HomeScreen(navController: NavController) {
     ) {
         Text(text = "Home Screen")
 
-        Button(onClick = { navController.navigate("feed") }) {
+        Button(onClick = { navController.navigate(Destination.Feed.route)}) {
             Text(text = "to Feed Screen")
         }
 
-        Button(onClick = { navController.navigate("profile")}) {
+        Button(onClick = { navController.navigate(Destination.Profile.route)}) {
             Text(text = "to Profile Screen")
         }
     }
