@@ -1,11 +1,20 @@
 package com.raccooncode.navigationpractice
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -13,10 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.raccooncode.navigationpractice.ui.theme.NavigationPracticeTheme
 
 data class User(
@@ -69,7 +80,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     NavigationAppHost(navController = navController)
-
+                    BottomNavTest(navController = navController)
                 }
             }
         }
@@ -95,3 +106,36 @@ fun NavigationAppHost(navController: NavHostController) {
     }
 }
 
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BottomNavTest(navController: NavHostController) {
+    Scaffold(bottomBar = {
+        NavigationBar {
+            val navBackStackEntry = navController.currentBackStackEntryAsState()
+            val currentDestination = navBackStackEntry.value?.destination
+        
+            NavigationBarItem(
+                selected = currentDestination?.route == Destination.Home.route,
+                onClick = { navController.navigate(Destination.Home.route)},
+                icon = { Icon(Icons.Default.Home, contentDescription = null)},
+                label = { Text(text = Destination.Home.route)}
+            )
+
+            NavigationBarItem(
+                selected = currentDestination?.route == Destination.Feed.route,
+                onClick = { navController.navigate(Destination.Feed.route)},
+                icon = { Icon(Icons.Default.List, contentDescription = null)},
+                label = { Text(text = Destination.Feed.route)}
+            )
+
+            NavigationBarItem(
+                selected = currentDestination?.route == Destination.Profile.route,
+                onClick = { navController.navigate(Destination.Profile.route)},
+                icon = { Icon(Icons.Default.Person, contentDescription = null)},
+                label = { Text(text = Destination.Profile.route)}
+            )
+        }
+    }) { 0.dp }
+}
