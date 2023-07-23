@@ -26,5 +26,9 @@ fun HomeScreen(navController: NavController) {
         Button(onClick = { navController.navigate(Destination.Profile.route)}) {
             Text(text = "to Profile Screen")
         }
+
+        Button(onClick = { navController.navigate(Destination.List.route)}) {
+            Text(text = "to List Screen")
+        }
     }
 }
