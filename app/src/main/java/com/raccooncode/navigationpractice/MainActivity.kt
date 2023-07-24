@@ -39,6 +39,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navDeepLink
 import com.raccooncode.navigationpractice.ui.theme.NavigationPracticeTheme
 import kotlinx.coroutines.launch
 
@@ -107,7 +108,10 @@ fun NavigationAppHost(navController: NavHostController) {
         composable(Destination.Feed.route) {FeedScreen(navController)}
         composable(Destination.Profile.route) {ProfileScreen(navController)}
         composable(Destination.List.route) {ListScreen(navController)}
-        composable(Destination.Detail.route) { navBackStackEntry ->
+        composable(
+            Destination.Detail.route,
+            deepLinks = listOf(navDeepLink {uriPattern = "https://www.navpractice.com/{userId}"})
+        ) { navBackStackEntry ->
             val userId = navBackStackEntry.arguments?.getString("userId")
             if (userId == null)
                 Toast.makeText(ctx, "UserId is required", Toast.LENGTH_SHORT).show()
